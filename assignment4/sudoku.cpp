@@ -3,51 +3,82 @@
 #include <vector>
 using namespace std;
 
-
-bool place(int k, int i, int j)
+bool is_safe(vector <vector <int>> &a, int row, int col, int n)
 {
-    for (int a = 0; a <= k; a++)
+    for (int i = 0; i < a.size(); i++)
     {
-        for (int b = 0; b <= i; b++)
+        if (a[row][i] == n)
         {
-            if (ans[a][b] == j)
+            return false;
+        }
+        if (a[i][col] == n)
+        {
+            return false;
+        }
+    }
+    
+    int row_s = row-row%3;
+    int col_s = col-col%3;
+    for (int i = row_s; i < row_s+3; i++)
+    {
+        for (int j = col_s; j < col_s+3; j++)
+        {
+            if (a[i][j] == n)
             {
-                return 0;
+                return false;
             }
         }
     }
-    return 1;
+    return true;
+}
+
+bool solveSudoku(vector<vector<int>> &a, int row, int col)
+{
+    if (row == a.size()-1 && col == a.size())
+    {
+        return true;
+    }
+    
+    if (col == a.size())
+    {
+        row ++;
+        col = 0;
+    }
+    if (a[row][col] != 0)
+    {
+        return solveSudoku(a, row, col+1);
+    }
+    else
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            if (is_safe(a,row, col, i))
+            {
+                a[row][col] = i;
+                if (solveSudoku(a, row, col))
+                {
+                    return true;
+                }
+                a[row][col] = 0;
+            }
+        }
+    }
+    return false;
     
 }
 
-void sudoku(int k, int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        if (ans[k][i] == 0)
-        {
-            for (int j = 1; j <= 9; j++)
-            {
-                if (place(k, i, j))
-                {
-                    ans[k][i] = j;
-                    if ()
-                }
-            }
-        }
-    }
-}
 
 int main() {
-    
-    vector <vector<int>> ans = {{3,0,6,5,7,8,4,0,0},{5,2,0,0,0,0,0,0,0},{0,8,7,0,0,0,0,3,1}, {2,6,3,4,1,5,9,8,7},{9,7,4,8,6,3,1,2,5}, {8,5,1,7,9,2,6,4,3}, {1,3,8,9,4,7,2,5,6}, {6,9,2,3,5,1,8,7,4}, {7,4,5,2,8,6,3,1,9}};
-    // for (int i = 0; i < 9; i++)
-    // {
-    //     for (int j = 0; j < 9; j++)
-    //     {
-    //         cout << "Enter value of " << i+1 << " and " << j+1 << " place of sudoku:"
-    //         cin >> ans[i][j];
-    //     }
-    // }
+    vector < vector <int>> a = {{3,0,6,5,7,8,4,0,0}, {5,2,0,0,0,0,0,0,0}, {0,8,7,0,0,0,0,3,1}, {0,0,3,0,1,0,0,8,0}, {9,0,0,8,6,3,0,0,5}, {0,5,0,0,9,0,6,0,0}, {1,3,0,0,0,0,2,5,0}, {0,0,0,0,0,0,0,7,4}, {0,0,5,2,8,6,3,0,0}};
+    solveSudoku(a, 0, 0);
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            cout << a[i][j] << "    ";
+        }
+        cout << endl;
+    }
+}
     
 }

@@ -1,4 +1,4 @@
-// graph coloring all ways
+// Online C++ compiler to run C++ program online
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -7,6 +7,7 @@ vector < vector <int>> a = {{0,1,1,1}, {1,0,1,0}, {1,1,0,1}, {1,0,1,0}};
 vector <int> x(4, 0);
 int n = x.size();
 int m = 3;
+
 int found = 0;
 
 void nextValue(int k)
@@ -45,13 +46,15 @@ void mcoloring(int k)
         }
         if (k == n-1)
         {
-
-            cout << "Possible Solution: " << endl;
+            found ++;
+            cout << "Solution Exists: " << endl;
             for (int i = 0; i < n; i++)
             {
                 cout << x[i] << "   ";
             }
             cout << endl;
+            return;
+            
         }
         else
         {
@@ -65,7 +68,7 @@ int main()
     mcoloring(0);
     if (found == 0)
     {
-        cout << "No solution Exists\n";
+        cout << "No solution Exists";
     }
 }
 

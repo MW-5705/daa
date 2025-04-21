@@ -3,10 +3,10 @@
 #include <vector>
 using namespace std;
 
-vector < vector <int>> a = {{0,1,1,1}, {1,0,1,0}, {1,1,0,1}, {1,0,1,0}};
+vector < vector <int>> a = {{0,1,1,1}, {1,0,1,1}, {1,1,0,1}, {1,1,1,0}};
 vector <int> x(4, 0);
 int n = x.size();
-int m = 3;
+int m = 4;
 
 int found = 0;
 
@@ -37,8 +37,8 @@ void nextValue(int k)
 
 void mcoloring(int k)
 {
-    while (true)
-    {
+    
+    
         nextValue(k);
         if (x[k] == 0)
         {
@@ -53,14 +53,13 @@ void mcoloring(int k)
                 cout << x[i] << "   ";
             }
             cout << endl;
-            return;
-            
+
         }
         else
         {
             mcoloring(k+1);
         }
-    }
+    
 }
 
 int main()
